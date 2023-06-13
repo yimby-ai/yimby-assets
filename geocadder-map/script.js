@@ -265,7 +265,7 @@ $.getJSON(
         .addTo(map);
 
       el.style.backgroundImage =
-        "url(https://its-aomi.github.io/devy.ai/geocadder-map/icons/" + developmentStageSmallLetters + ".png)";
+        "url(https://assets.yimby.ai/geocadder-map/icons/" + developmentStageSmallLetters + ".png)";
 
       el.addEventListener("click", (e) => {
         // flyToStoreOnMarkerClick(markerObj);
