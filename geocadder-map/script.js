@@ -232,7 +232,7 @@ $.getJSON(
 
       if (website) {
         popupContent +=
-          "<span class='popup-links'><img class='address-icon' src='geocadder-map/icons/website.svg'><a class='web-links address-text' target='_blank' href='" +
+          "<span class='popup-links'><img class='address-icon' src='https://assets.yimby.ai/geocadder-map/icons/website.svg'><a class='web-links address-text' target='_blank' href='" +
           website +
           "'>Link to Article</a></span>";
       }
