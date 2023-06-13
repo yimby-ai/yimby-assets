@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>devy.ai map :: geocadder</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link href="jquery-ui.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <!-- Turf.js plugin -->
+    <!-- <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script> -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js"></script>
+  </head>
+
+  <body>
+    <div id="sidebar"></div>
+    <div id="sidebar-popup"></div>
+
+    <!-- <button class='button-toggle-legend'><img src="icons/toggle-legend.svg"></button>
+
+  <button class='button-toggle-filter'><img src="icons/toggle-filter.svg"></button> -->
+
+    <div class="toggle-legend-box">
+      <div>
+        <div class="welcome-content">
+          <span class="welcome-close-button">X</span>
+          <div class="sidebar-content-inner">
+            <h1 class="welcome-popup">Legend</h1>
+          </div>
+        </div>
+
+        <div id="legend-items">
+          <div>
+            <span>Completed</span
+            ><img class="legend-image" src="icons/completed.svg" />
+          </div>
+          <div>
+            <span>Proposed</span
+            ><img class="legend-image" src="icons/proposed.svg" />
+          </div>
+          <div>
+            <span>Under Construction</span
+            ><img class="legend-image" src="icons/under-construction.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toggle-filter-box">
+      <div>
+        <div class="welcome-content">
+          <span class="welcome-close-button">X</span>
+          <div class="sidebar-content-inner">
+            <h1 class="welcome-popup">Filter</h1>
+          </div>
+        </div>
+
+        <fieldset id="filter-by-property-type">
+          <div id="list1" class="dropdown-check-list" tabindex="100">
+            <span class="anchor">Property Type</span>
+            <ul class="items">
+              <li>
+                <input
+                  name="filter-by-property-type-input"
+                  id="build-to-rent"
+                  type="checkbox"
+                  value="build-to-rent"
+                  checked
+                /><label for="build-to-rent">Build to Rent</label
+                >
+              </li>
+              <li>
+                <input
+                  name="filter-by-property-type-input"
+                  id="industrial"
+                  type="checkbox"
+                  value="industrial"
+                  checked
+                /><label for="industrial">Industrial</label
+                >
+              </li>
+              <li>
+                <input
+                  name="filter-by-property-type-input"
+                  id="medical"
+                  type="checkbox"
+                  value="medical"
+                  checked
+                /><label for="medical">Medical</label
+                >
+              </li>
+              <li>
+                <input
+                  name="filter-by-property-type-input"
+                  id="mixed-use"
+                  type="checkbox"
+                  value="mixed-use"
+                  checked
+                /><label for="mixed-use">Mixed Use</label
+                >
+              </li>
+              <li>
+                <input
+                  name="filter-by-property-type-input"
+                  id="multifamily"
+                  type="checkbox"
+                  value="multifamily"
+                  checked
+                /><label for="multifamily">Multifamily</label
+                >
+              </li>
+              <li>
+                <input
+                  name="filter-by-property-type-input"
+                  id="retail"
+                  type="checkbox"
+                  value="retail"
+                  checked
+                /><label for="retail">Retail</label
+                >
+              </li>
+              <li>
+                <input
+                  name="filter-by-property-type-input"
+                  id="single-family"
+                  type="checkbox"
+                  value="single-family"
+                  checked
+                /><label for="single-family">Single Family</label
+                >
+              </li>
+            </ul>
+          </div>
+        </fieldset>
+
+        <fieldset id="filter-by-development-stage">
+          <div id="list2" class="dropdown-check-list" tabindex="100">
+            <span class="anchor">Development Stage</span>
+            <ul class="items">
+              <li>
+                <input
+                  name="filter-by-development-stage-input"
+                  id="completed"
+                  type="checkbox"
+                  value="completed"
+                  checked
+                /><label for="completed">Completed</label><img class="legend-image" src="icons/completed.svg" />
+              </li>
+              <li>
+                <input
+                  name="filter-by-development-stage-input"
+                  id="proposed"
+                  type="checkbox"
+                  value="proposed"
+                  checked
+                /><label for="proposed">Proposed</label><img class="legend-image" src="icons/proposed.svg" />
+              </li>
+              <li>
+                <input
+                  name="filter-by-development-stage-input"
+                  id="under-construction"
+                  type="checkbox"
+                  value="under-construction"
+                  checked
+                /><label for="under-construction">Under Construction</label><img class="legend-image" src="icons/under-construction.svg" />
+              </li>
+            </ul>
+          </div>
+        </fieldset>
+
+        <fieldset id="filter-by-estimated-completion">
+          <div id="list3" class="dropdown-check-list" tabindex="300">
+            <span class="anchor">Estimated Completion</span>
+            <ul class="items">
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2023"
+                  type="checkbox"
+                  value="2023"
+                  checked
+                /><label for="2023">2023</label>
+              </li>
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2024"
+                  type="checkbox"
+                  value="2024"
+                  checked
+                /><label for="2024">2024</label>
+              </li>
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2025"
+                  type="checkbox"
+                  value="2025"
+                  checked
+                /><label for="2025">2025</label>
+              </li>
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2026"
+                  type="checkbox"
+                  value="2026"
+                  checked
+                /><label for="2026">2026</label>
+              </li>
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2027"
+                  type="checkbox"
+                  value="2027"
+                  checked
+                /><label for="2027">2027</label>
+              </li>
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2028"
+                  type="checkbox"
+                  value="2028"
+                  checked
+                /><label for="2028">2028</label>
+              </li>
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2029"
+                  type="checkbox"
+                  value="2029"
+                  checked
+                /><label for="2029">2029</label>
+              </li>
+              <li>
+                <input
+                  name="filter-by-estimated-completion-input"
+                  id="2030"
+                  type="checkbox"
+                  value="2030"
+                  checked
+                /><label for="2030">2030</label>
+              </li>
+            </ul>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
